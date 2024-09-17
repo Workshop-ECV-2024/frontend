@@ -15,6 +15,7 @@ import PlanetDetail from './ui/PlanetDetail';
 import ControlMenu from './ui/ControlMenu/ControlMenu';
 import SceneLighting from './SceneLighting';
 import IntroText from './ui/IntroText';
+import ToneSynth from './ToneSynth';
 
 function SolarSystem() {
   const [planetOrbitProgress, setPlanetOrbitProgress] = useState<{ [key: string]: number }>(
@@ -26,6 +27,7 @@ function SolarSystem() {
 
   return (
     <>
+     <ToneSynth />
       <Canvas camera={{ position: [-100, 0, 100] }}>
         <CameraController />
         <SceneBackground texturePath="/images/background/stars_8k.webp" />

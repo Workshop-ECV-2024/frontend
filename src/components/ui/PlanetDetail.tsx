@@ -8,11 +8,35 @@ const PlanetDetail: React.FC = () => {
   const { cameraState } = useCameraContext();
   const [displayedPlanet, setDisplayedPlanet] = useState(selectedPlanet);
 
+  const [date, setDate] = useState('');
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
+
   useEffect(() => {
     if (cameraState === 'DETAIL_VIEW') {
       setDisplayedPlanet(selectedPlanet);
     }
   }, [cameraState, selectedPlanet]);
+
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDate(event.target.value);
+  };
+
+  const handleCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCity(event.target.value);
+  };
+
+  const handleCountryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCountry(event.target.value);
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    // Logique de traitement du formulaire
+    console.log('Date:', date);
+    console.log('City:', city);
+    console.log('Country:', country);
+  };
 
   const variants = {
     hidden: { opacity: 0, y: 20 },
@@ -34,6 +58,50 @@ const PlanetDetail: React.FC = () => {
           variants={variants}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
+          {/* Formulaire de recherche */}
+          <form onSubmit={handleSubmit} className='mb-4'>
+            <div className='mb-2'>
+              <label htmlFor="date" className='block text-sm font-semibold'>Select Date:</label>
+              <input
+                type="date"
+                id="date"
+                value={date}
+                onChange={handleDateChange}
+                className='p-2 w-full border border-gray-300 rounded'
+              />
+            </div>
+            {displayedPlanet?.name === 'Earth' && (
+              <div className='mb-4'>
+                <label className='block text-sm font-semibold'>Location:</label>
+                <div className='flex gap-2'>
+                  <input
+                    type="text"
+                    id="city"
+                    value={city}
+                    onChange={handleCityChange}
+                    placeholder="City"
+                    className='p-2 flex-1 border border-gray-300 rounded'
+                  />
+                  <input
+                    type="text"
+                    id="country"
+                    value={country}
+                    onChange={handleCountryChange}
+                    placeholder="Country"
+                    className='p-2 flex-1 border border-gray-300 rounded'
+                  />
+                </div>
+              </div>
+            )}
+            <button
+              type="submit"
+              className='bg-blue-500 text-white p-2 rounded'
+            >
+              Submit
+            </button>
+          </form>
+
+          {/* Détails de la planète */}
           <h1 className='tracking-tight font-semibold text-7xl lg:text-8xl xl:text-8xl opacity-90'>
             {displayedPlanet ? displayedPlanet.name : ''}
           </h1>
@@ -41,7 +109,7 @@ const PlanetDetail: React.FC = () => {
           <ul className='text-sm w-64 ml-2 hidden lg:block text-gray-200'>
             <li>
               <p>
-                <span className='font-semibold'>Orbital Periood: </span>
+                <span className='font-semibold'>Orbital Period: </span>
                 <span>{displayedPlanet?.displayStats.orbitalPeriod} Earth days</span>
               </p>
             </li>
@@ -95,7 +163,7 @@ const PlanetDetail: React.FC = () => {
             </li>
             <li>
               <p>
-                <span className='font-semibold'>Surface Tempoerature: </span>
+                <span className='font-semibold'>Surface Temperature: </span>
                 <span>{displayedPlanet?.displayStats.surfaceTemp}</span>
               </p>
             </li>
