@@ -15,12 +15,14 @@
     "@react-three/drei": "^9.88.11",
     "@react-three/fiber": "^8.15.9",
     "@tabler/icons-react": "^2.40.0",
+    "@tanstack/react-query": "^5.56.2",
     "@types/three": "^0.161.2",
     "framer-motion": "^11.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "three": "^0.161.0",
-    "tone": "^15.0.4"
+    "tone": "^15.0.4",
+    "valibot": "^0.42.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
