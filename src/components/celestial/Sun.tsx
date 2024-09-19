@@ -19,7 +19,7 @@ const Sun: React.FC<SunProps> = ({ position, radius }) => {
         // color: 0xffdd99,
         emissive: 0xffdd99,
         emissiveMap: sunTexture,
-        emissiveIntensity: 0.75,
+        emissiveIntensity: 0.5,
         map: sunTexture,
       })
     );
