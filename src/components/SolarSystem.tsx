@@ -17,6 +17,7 @@ import SceneLighting from "./SceneLighting";
 import IntroText from "./ui/IntroText";
 import ToneSynth from "./ToneSynth";
 import { useSelectedPlanet } from "../contexts/SelectedPlanetContext";
+import Constellations from "./celestial/Constellations";
 
 function SolarSystem() {
   const [selectedPlanet] = useSelectedPlanet();
@@ -34,8 +35,9 @@ function SolarSystem() {
     <>
       <ToneSynth />
       <Canvas camera={{ position: [-100, 0, 100] }}>
+        <Constellations />
         <CameraController />
-        <SceneBackground texturePath="/images/background/stars_8k.webp" />
+        {/* <SceneBackground texturePath="/images/background/stars_8k.webp" /> */}
         <SceneLighting />
         <Sun position={[0, 0, 0]} radius={1} />
         {planetsData.map(planet => (
