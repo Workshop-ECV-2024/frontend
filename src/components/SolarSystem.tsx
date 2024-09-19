@@ -35,7 +35,6 @@ function SolarSystem() {
   return (
     <>
       <WeatherSymphony />
-      <PlaylistButton />
       <Canvas camera={{ position: [-100, 0, 100] }}>
         <Constellations />
         <CameraController />

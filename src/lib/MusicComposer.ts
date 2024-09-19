@@ -1,6 +1,6 @@
 import * as Tone from 'tone'
 export class MusicComposer {
-    public synth: Tone.Synth;
+    public synth: any;
     public planet: string = 'Earth';
     public planetData: object|null = null;
 
@@ -23,7 +23,6 @@ export class MusicComposer {
     public earthData: object;
     public weather: object|null = null;
     constructor(earthData: object) {
-        this.synth = new Tone.Synth().toDestination();
         this.earthData = earthData;
     }
 
@@ -34,8 +33,14 @@ export class MusicComposer {
     }
 
     setBass() {
+        let attack = 0.008
+
+        if (this.weather && this.weather.pressure < 1013) {
+            attack = 5
+        }
+
         const bassSynth = new Tone.MembraneSynth({
-            pitchDecay: 0.008,
+            pitchDecay: attack,
             octaves: 10,
             oscillator: {
                 type: "sine",
@@ -51,6 +56,7 @@ export class MusicComposer {
 
         let octave = 4
         let timing = '8n'
+        let cloudiness;
         let temp;
         let mass;
         let notes;
@@ -58,6 +64,7 @@ export class MusicComposer {
             case 'Earth':
                 temp = this.weather?.temperature ?? 15
                 mass = 1
+                cloudiness = this.weather?.cloudiness ?? 0
                 break;
             default:
                 temp = this.planetData.avg_temperature
@@ -65,6 +72,39 @@ export class MusicComposer {
                 break;
         }
 
+        if (this.planet === 'Earth') {
+            if (cloudiness < 20) {
+                timing = '16n'
+            } else if (cloudiness < 50) {
+                timing = '8n'
+            } else if (cloudiness < 80) {
+                timing = '4n'
+            } else if (cloudiness < 100) {
+                timing = '1n'
+            } else if (cloudiness === 100) {
+                timing = '1m'
+            }
+        } else {
+            if (mass < 1) {
+                timing = '16n'
+            }
+
+            if (mass > 1 && mass < 10) {
+                timing = '4n'
+            }
+
+            if (mass > 10 && mass < 50) {
+                timing = '2n'
+            }
+
+            if (mass > 50 && mass < 100) {
+                timing = '1n'
+            }
+
+            if (mass > 100) {
+                timing = '1m'
+            }
+        }
         if (temp < 15 && temp > 0) {
             octave = 3
         }
@@ -79,26 +119,6 @@ export class MusicComposer {
 
         if (temp > 15) {
             octave = 5
-        }
-
-        if (mass < 1) {
-            timing = '16n'
-        }
-
-        if (mass > 1 && mass < 10) {
-            timing = '4n'
-        }
-
-        if (mass > 10 && mass < 50) {
-            timing = '2n'
-        }
-
-        if (mass > 50 && mass < 100) {
-            timing = '1n'
-        }
-
-        if (mass > 100) {
-            timing = '1m'
         }
 
         if (octave < 4) {
@@ -156,7 +176,10 @@ export class MusicComposer {
     }
 
     private setMelody() {
-        let octave = 5
+        this.synth = new Tone.Synth().toDestination();
+
+
+        let octave = 4
         let timing = '8n'
         let temp;
         let mass;
@@ -164,7 +187,7 @@ export class MusicComposer {
         let distanceFromSun;
         switch (this.planet) {
             case 'Earth':
-                temp = 15
+                temp = this.weather?.temperature ?? 15
                 mass = 1
                 distanceFromSun = parseFloat(this.earthData.distance_from_sun)
                 break;
@@ -185,22 +208,26 @@ export class MusicComposer {
         reverb.wet.value = reverbValue;
         this.synth.connect(reverb);
 
-
-
         if (temp < 15 && temp > 0) {
-            octave = 4
-        }
-
-        if (temp <= 0 && temp > -100) {
             octave = 3
         }
 
-        if (temp <= -100) {
+        if (temp <= 0 && temp > -100) {
+            this.synth = new Tone.FMSynth({
+                volume: 10,
+            }).toDestination();
             octave = 2
         }
 
+        if (temp <= -100) {
+            this.synth = new Tone.FMSynth({
+                volume: 10,
+            }).toDestination();
+            octave = 1
+        }
+
         if (temp > 15) {
-            octave = 6
+            octave = 5
         }
 
         if (mass < 1) {

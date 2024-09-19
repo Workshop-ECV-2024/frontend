@@ -5,6 +5,7 @@ import CameraHomeButton from "./CameraHomeButton";
 import InfoButton from "./InfoButton";
 import ExitViewButon from "./ExitViewButon";
 import HelpButton from "./HelpButton";
+import PlaylistButton from "../PlaylistButton.tsx";
 
 const ControlMenu = () => {
   const { cameraState } = useCameraContext();
@@ -41,6 +42,7 @@ const ControlMenu = () => {
     >
       <div className="flex gap-x-2">
         <CameraHomeButton />
+        <PlaylistButton />
         <ExitViewButon />
       </div>
     </motion.div>
