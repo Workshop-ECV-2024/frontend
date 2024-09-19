@@ -1,6 +1,7 @@
-import { Vector3, TextureLoader } from 'three';
-import { useLoader } from '@react-three/fiber';
-import { MeshWobbleMaterial, Sphere } from '@react-three/drei';
+import { Vector3, TextureLoader } from "three";
+import { useLoader, useThree } from "@react-three/fiber";
+import { useEffect } from "react";
+import * as THREE from "three";
 
 interface SunProps {
   position: Vector3 | [number, number, number];
@@ -8,21 +9,25 @@ interface SunProps {
 }
 
 const Sun: React.FC<SunProps> = ({ position, radius }) => {
-  const sunTexture = useLoader(TextureLoader, '/images/bodies/sun_2k.webp');
+  const sunTexture = useLoader(TextureLoader, "/images/bodies/sun_2k.webp");
+  const { scene } = useThree();
 
-  return (
-    <mesh position={position}>
-      <Sphere args={[radius, 32, 32]}>
-        <MeshWobbleMaterial
-          map={sunTexture}
-          emissive="#FFFF99"
-          emissiveIntensity={0.012}
-          factor={0.1}
-          speed={0.05}
-        />
-      </Sphere>
-    </mesh>
-  );
+  useEffect(() => {
+    const sun = new THREE.Mesh(
+      new THREE.SphereGeometry(radius, 32, 32),
+      new THREE.MeshPhongMaterial({
+        // color: 0xffdd99,
+        emissive: 0xffdd99,
+        emissiveMap: sunTexture,
+        emissiveIntensity: 0.75,
+        map: sunTexture,
+      })
+    );
+
+    scene.add(sun);
+  }, []);
+
+  return null;
 };
 
 export default Sun;
