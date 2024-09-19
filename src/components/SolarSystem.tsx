@@ -1,23 +1,24 @@
 // SolarSystem.tsx
-import { useState } from 'react';
-import { PlanetData } from '../../types';
-import { Canvas } from '@react-three/fiber';
-import { AnimatePresence } from 'framer-motion';
-import planetsData from '../lib/planetsData';
-import SceneBackground from './SceneBackground';
-import Sun from './celestial/Sun';
-import Planet from './celestial/Planets';
-import CameraController from './motion/CameraController';
-import PlanetsUpdater from './motion/PlanetsUpdater';
-import PlanetMenu from './ui/PlanetMenu';
-import SpeedControl from './ui/SpeedControl';
-import PlanetDetail from './ui/PlanetDetail';
-import ControlMenu from './ui/ControlMenu/ControlMenu';
-import SceneLighting from './SceneLighting';
-import IntroText from './ui/IntroText';
+import { useState } from "react";
+import { PlanetData } from "../../types";
+import { Canvas } from "@react-three/fiber";
+import { AnimatePresence } from "framer-motion";
+import planetsData from "../lib/planetsData";
+import SceneBackground from "./SceneBackground";
+import Sun from "./celestial/Sun";
+import Planet from "./celestial/Planets";
+import CameraController from "./motion/CameraController";
+import PlanetsUpdater from "./motion/PlanetsUpdater";
+import PlanetMenu from "./ui/PlanetMenu";
+import SpeedControl from "./ui/SpeedControl";
+import PlanetDetail from "./ui/PlanetDetail";
+import ControlMenu from "./ui/ControlMenu/ControlMenu";
+import SceneLighting from "./SceneLighting";
+import IntroText from "./ui/IntroText";
 import WeatherSymphony from "./WeatherSymphony.tsx";
 import { useSelectedPlanet } from "../contexts/SelectedPlanetContext";
 import Constellations from "./celestial/Constellations";
+import PlaylistButton from "./ui/PlaylistButton.tsx";
 
 function SolarSystem() {
   const [selectedPlanet] = useSelectedPlanet();
@@ -33,7 +34,8 @@ function SolarSystem() {
 
   return (
     <>
-        <WeatherSymphony />
+      <WeatherSymphony />
+      <PlaylistButton />
       <Canvas camera={{ position: [-100, 0, 100] }}>
         <Constellations />
         <CameraController />

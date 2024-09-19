@@ -1,50 +1,43 @@
-import {useEffect, useState} from "react";
-import {useSelectedPlanet} from "../contexts/SelectedPlanetContext.tsx";
-import {MusicComposer} from "../lib/MusicComposer.ts";
+import { useEffect, useState } from "react";
+import { useSelectedPlanet } from "../contexts/SelectedPlanetContext.tsx";
+import { MusicComposer } from "../lib/MusicComposer.ts";
 import usePlanetData from "../hooks/usePlanetData.ts";
-import * as Tone from 'tone'
+import * as Tone from "tone";
 import useWeather from "../hooks/useWeather.ts";
+import useGeolocation from "../hooks/useGeolocation.ts";
 
 export default function WeatherSymphony() {
-    const [selectedPlanet] = useSelectedPlanet();
-    const { data: planetData} = usePlanetData(selectedPlanet?.name);
-    const { data: earthData } = usePlanetData('Earth');
-    const [composer, setComposer] = useState<MusicComposer | null>(null);
-    const [latLong, setLatLong] = useState<[number, number] | [null, null]>([null, null]);
-    const {data: weather} = useWeather(latLong[0], latLong[1]);
-    useEffect(() => {
-        if (!selectedPlanet && composer) {
-            composer.stopMusic();
-            return;
-        }
+  const latLong = useGeolocation();
+  const [selectedPlanet] = useSelectedPlanet();
+  const { data: planetData } = usePlanetData(selectedPlanet?.name);
+  const { data: earthData } = usePlanetData("Earth");
+  const [composer, setComposer] = useState<MusicComposer | null>(null);
+  const { data: weather } = useWeather(latLong[0], latLong[1]);
 
-        if (earthData) {
-            Tone.getTransport().cancel();
-            setComposer(new MusicComposer(earthData));
-        }
+  useEffect(() => {
+    if (!selectedPlanet && composer) {
+      composer.stopMusic();
+      return;
+    }
 
-        if (!selectedPlanet || !composer) return;
+    if (earthData) {
+      Tone.getTransport().cancel();
+      setComposer(new MusicComposer(earthData));
+    }
 
-        if (selectedPlanet.name === 'Earth') {
-            composer.stopMusic();
-            composer.setPlanet(planetData.name, earthData, weather);
-            composer.playMusic();
-            return;
-        }
+    if (!selectedPlanet || !composer) return;
 
-        composer.stopMusic();
-        composer.setPlanet(selectedPlanet.name, planetData);
-        composer.playMusic();
-    }, [selectedPlanet, planetData, earthData])
+    if (selectedPlanet.name === "Earth") {
+      composer.stopMusic();
+      composer.setPlanet(planetData.name, earthData, weather);
+      composer.playMusic();
+      return;
+    }
 
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            setLatLong([position.coords.latitude, position.coords.longitude]);
-        })
-    }, [])
+    composer.stopMusic();
+    composer.setPlanet(selectedPlanet.name, planetData);
+    composer.playMusic();
+  }, [selectedPlanet, planetData, earthData]);
 
-    return (
-        <>
-        </>
-    );
+  return null;
 }
