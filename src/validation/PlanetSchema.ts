@@ -4,7 +4,7 @@ const PlanetSchema = v.object({
   id: v.number(),
   name: v.optional(v.string()),
   radius: v.optional(v.string()),
-  mass: v.optional(v.string()),
+  mass: v.optional(v.number()),
   distance_from_sun: v.optional(v.string()),
   day_length: v.optional(v.string()),
   year_length: v.optional(v.string()),

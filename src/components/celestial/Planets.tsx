@@ -33,6 +33,14 @@ const Planet: React.FC<ExtendedPlanetData> = ({
   const z = Math.sin(orbitProgress) * orbitRadius;
   const ref = useRef<Mesh>(null);
 
+  if (name === 'Earth') {
+    const date = new Date();
+    const hour = date.getHours();
+    const nightTexturePath = '/images/bodies/earth_night.jpg';
+    const nightTexture = useLoader(TextureLoader, nightTexturePath);
+    texture.image = hour >= 18 || hour < 6 ? nightTexture.image : texture.image;
+  }
+
   useFrame(() => {
     if (ref.current) {
       const rotationPerFrame = (rotationSpeed * (Math.PI / 180)) / 60;
