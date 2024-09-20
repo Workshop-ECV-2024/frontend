@@ -1,5 +1,5 @@
 // ToneSynth.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import * as Tone from 'tone';
 
 const ToneSynth = () => {

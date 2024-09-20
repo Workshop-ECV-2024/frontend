@@ -38,7 +38,9 @@ const PlanetDetail: React.FC = () => {
 
   const shouldDisplayDetails = cameraState === "DETAIL_VIEW";
 
+
   return (
+      // @ts-ignore
     <AnimatePresence>
       {shouldDisplayDetails && (
         <motion.div

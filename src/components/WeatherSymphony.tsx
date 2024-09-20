@@ -29,7 +29,7 @@ export default function WeatherSymphony() {
 
     if (selectedPlanet.name === "Earth") {
       composer.stopMusic();
-      composer.setPlanet(planetData.name, earthData, weather);
+      composer.setPlanet(selectedPlanet.name, earthData, weather);
       composer.playMusic();
       return;
     }

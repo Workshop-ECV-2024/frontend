@@ -1,10 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useEffect, useRef } from "react";
+import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import {
-  CSS2DRenderer,
-  CSS2DObject,
-} from "three/examples/jsm/renderers/CSS2DRenderer";
 
 const CONSTELLATION_LINE_COLOR = 0x424242;
 const STARS_COLOR_MAP = {
@@ -28,10 +24,10 @@ export default function Constellations() {
       .then(response => response.text())
       .then(data => {
         const starData = data.split("\n");
-        const starsTemp = [];
-        const positions = [];
+        const starsTemp: object[] = [];
+        const positions: number[] = [];
         const colors = [] as number[];
-        const sizes = [];
+        const sizes: number[] = [];
         const color = new THREE.Color();
         const starsMaterial = new THREE.ShaderMaterial({
           vertexShader: vertexShader(),
@@ -82,8 +78,6 @@ export default function Constellations() {
 
         const points = new THREE.Points(starsGeometry, starsMaterial);
         scene.add(points);
-
-        // setStarsData({ positions, colors, sizes });
 
         stars.current = starsTemp.reduce((acc, star) => {
           acc[star.id] = star;

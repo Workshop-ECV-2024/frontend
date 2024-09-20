@@ -8,7 +8,7 @@ interface SunProps {
   radius: number;
 }
 
-const Sun: React.FC<SunProps> = ({ position, radius }) => {
+const Sun: React.FC<SunProps> = ({ radius }) => {
   const sunTexture = useLoader(TextureLoader, "/images/bodies/sun_2k.webp");
   const { scene } = useThree();
 
