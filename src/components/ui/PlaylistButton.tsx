@@ -11,12 +11,13 @@ import planetsData from "../../lib/planetsData";
 import { IconPlayerPause, IconPlayerPlay } from "@tabler/icons-react";
 import useWeather from "../../hooks/useWeather";
 import useGeolocation from "../../hooks/useGeolocation";
-import { MusicComposer } from "../../lib/MusicComposer";
+import {MusicComposer, PlanetData} from "../../lib/MusicComposer";
 import {useEffect, useState} from "react";
 import * as Tone from "tone";
 
 interface PlaylistButtonProps {}
 
+// @ts-ignore
 export default function PlaylistButton({ ...props }: PlaylistButtonProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [lat, lng] = useGeolocation();
@@ -29,7 +30,7 @@ export default function PlaylistButton({ ...props }: PlaylistButtonProps) {
     if (!earthData) return;
 
     Tone.getTransport().cancel();
-    setComposer(new MusicComposer(earthData));
+    setComposer(new MusicComposer(earthData as PlanetData));
     console.log(planetName, composer)
     if (!planetName || !composer) return;
 

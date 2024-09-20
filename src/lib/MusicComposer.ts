@@ -1,17 +1,17 @@
 import * as Tone from 'tone'
 
-type Weather = {
+export type Weather = {
     temperature: number;
     wind_speed: number;
     pressure: number;
     cloudiness: number;
 }
 
-type PlanetData = {
-    avg_temperature: number;
-    mass: number;
-    distance_from_sun: number;
-    year_length: number;
+export type PlanetData = {
+    avg_temperature?: number;
+    mass?: number;
+    distance_from_sun?: number;
+    year_length?: number;
 }
 export class MusicComposer {
     public synth: any;

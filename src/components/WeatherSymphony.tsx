@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelectedPlanet } from "../contexts/SelectedPlanetContext.tsx";
-import { MusicComposer } from "../lib/MusicComposer.ts";
+import {MusicComposer, PlanetData, Weather} from "../lib/MusicComposer.ts";
 import usePlanetData from "../hooks/usePlanetData.ts";
 import * as Tone from "tone";
 import useWeather from "../hooks/useWeather.ts";
@@ -22,20 +22,20 @@ export default function WeatherSymphony() {
 
     if (earthData) {
       Tone.getTransport().cancel();
-      setComposer(new MusicComposer(earthData));
+      setComposer(new MusicComposer(earthData as PlanetData));
     }
 
     if (!selectedPlanet || !composer) return;
 
     if (selectedPlanet.name === "Earth") {
       composer.stopMusic();
-      composer.setPlanet(selectedPlanet.name, earthData, weather);
+      composer.setPlanet(selectedPlanet.name, earthData as PlanetData, weather as Weather);
       composer.playMusic();
       return;
     }
 
     composer.stopMusic();
-    composer.setPlanet(selectedPlanet.name, planetData);
+    composer.setPlanet(selectedPlanet.name, planetData as PlanetData);
     composer.playMusic();
   }, [selectedPlanet, planetData, earthData]);
 
