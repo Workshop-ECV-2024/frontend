@@ -20,7 +20,7 @@ const ExitViewButton: React.FC = () => {
 
   return (
     <Button
-        className="bg-red-500/30 hover:bg-[rgba(116,64,165,0.49)] text-[rgba(139,103,172,0.32)] font-bold py-2 px-4 rounded-full text-white"
+        className="bg-red-500/30 hover:bg-[rgba(116,64,165,0.49)] text-[rgba(139,103,172,0.32)] font-bold py-2 px-4 rounded-full text-white flex items-center gap-2"
         onClick={handleExitDetailMode}>
       <IconX />Exit Detail View
     </Button>

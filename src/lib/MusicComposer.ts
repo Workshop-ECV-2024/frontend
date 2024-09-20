@@ -344,7 +344,7 @@ export class MusicComposer {
                 const planetYearLength = this.planetData.year_length;
 
                 // @ts-ignore
-                tempo = Math.max(Math.min(160, (planetYearLength/earthYearLength) * 120), 60);
+                tempo = Math.max(Math.min(160, (earthYearLength/planetYearLength) * 120), 60);
         }
 
         Tone.getTransport().bpm.value = tempo;
