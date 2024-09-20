@@ -88,6 +88,7 @@ const PlanetDetail: React.FC = () => {
                           ] ?? ""
                         )
                       ).map(([key, value]) => (
+                          // @ts-ignore
                         <li key={key}>
                           {key} - {value}%
                         </li>

@@ -1,8 +1,22 @@
 import * as Tone from 'tone'
+
+type Weather = {
+    temperature: number;
+    wind_speed: number;
+    pressure: number;
+    cloudiness: number;
+}
+
+type PlanetData = {
+    avg_temperature: number;
+    mass: number;
+    distance_from_sun: number;
+    year_length: number;
+}
 export class MusicComposer {
     public synth: any;
     public planet: string = 'Earth';
-    public planetData: object|null = null;
+    public planetData: PlanetData|null = null;
 
     public highNotes: string[] = ["C", "E", "G", "C", "G", "E", "C"];
     public lowNotes: string[] = ["A", "E", "C", "A", "C", "E", "A"];
@@ -20,13 +34,13 @@ export class MusicComposer {
     public normalBassRhythm = ['0:0', '0:1', '0:2:3', '0:2:6', '0:3', '1:0'];
     public slowBassRhythm = ['0:0', '0:2', '1:0', '1:1', '1:3'];
 
-    public earthData: object;
-    public weather: object|null = null;
-    constructor(earthData: object) {
+    public earthData: PlanetData;
+    public weather: Weather|null = null;
+    constructor(earthData: PlanetData) {
         this.earthData = earthData;
     }
 
-    setPlanet(planet: string, planetData: object|null = null, weather: object|null = null) {
+    setPlanet(planet: string, planetData: PlanetData|null = null, weather: Weather|null = null) {
         this.planet = planet;
         this.planetData = planetData;
         this.weather = weather;
@@ -60,6 +74,7 @@ export class MusicComposer {
         let temp;
         let mass;
         let notes;
+
         switch (this.planet) {
             case 'Earth':
                 temp = this.weather?.temperature ?? 15
@@ -189,16 +204,16 @@ export class MusicComposer {
             case 'Earth':
                 temp = this.weather?.temperature ?? 15
                 mass = 1
-                distanceFromSun = parseFloat(this.earthData.distance_from_sun)
+                distanceFromSun = this.earthData.distance_from_sun
                 break;
             default:
                 temp = this.planetData.avg_temperature
                 mass = this.planetData.mass
-                distanceFromSun = parseFloat(this.planetData.distance_from_sun)
+                distanceFromSun = this.planetData.distance_from_sun
                 break;
         }
 
-        let earthDistanceFromSun = parseFloat(this.earthData.distance_from_sun);
+        let earthDistanceFromSun = this.earthData.distance_from_sun;
         // let's say earth distance is equal to 25% of reverb
 
         let reverbValue = Math.min(1, 0.25 * (distanceFromSun / earthDistanceFromSun));
@@ -311,7 +326,7 @@ export class MusicComposer {
     }
 
     private setTempo() {
-        let tempo ;
+        let tempo: number;
 
         switch (this.planet) {
             case 'Earth':

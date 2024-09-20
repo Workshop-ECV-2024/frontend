@@ -14,6 +14,16 @@ const STARS_COLOR_MAP = {
   DEFAULT: 0xffffff,
 };
 
+type Star = {
+    id: number;
+    name: string;
+    gLon: number;
+    gLat: number;
+    mag: number;
+    spectralClass: string;
+    v: THREE.Vector3;
+}
+
 export default function Constellations() {
   const stars = useRef({});
   const { scene } = useThree();
@@ -36,7 +46,7 @@ export default function Constellations() {
         });
 
         starData.forEach(row => {
-          const star = {
+          const star: Star = {
             id: Number(row.slice(0, 4)),
             name: row.slice(4, 14).trim(),
             gLon: Number(row.slice(90, 96)),
@@ -79,7 +89,7 @@ export default function Constellations() {
         const points = new THREE.Points(starsGeometry, starsMaterial);
         scene.add(points);
 
-        stars.current = starsTemp.reduce((acc, star) => {
+        stars.current = starsTemp.reduce((acc, star: Star) => {
           acc[star.id] = star;
           return acc;
         }, {});
