@@ -45,9 +45,9 @@ const IntroText: React.FC = () => {
       "
     >
       <h1 className='tracking-tight font-semibold text-2xl md:text-5xl lg:text-7xl xl:text-8xl'>
-        <span className='text-white'>Welcome to the </span>
+        <span className='text-white'>Symphonie </span>
         <span className='from-[#FF1CF7] to-[#b249f8] bg-clip-text text-transparent bg-gradient-to-b'>
-          Solar System
+          Cosmique
         </span>
       </h1>
     </motion.div>
