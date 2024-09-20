@@ -66,6 +66,7 @@ function CreateJam() {
   const [recordedSounds, setRecordedSounds] = useState<Phenomenon[]>([]);
 
   const playNote = (note: string) => {
+    Tone.Transport.cancel();
     const synth = new Tone.Synth().toDestination();
     synth.triggerAttackRelease(note, "8n");
   };
@@ -93,6 +94,7 @@ function CreateJam() {
   };
 
   const playFinalMusic = async () => {
+    Tone.Transport.cancel();
     await Tone.start();
     Tone.Transport.bpm.value = 120;
     Tone.Transport.start();
