@@ -19,7 +19,9 @@ const ExitViewButton: React.FC = () => {
   if (!selectedPlanet) return null;
 
   return (
-    <Button color='danger' variant='flat' onClick={handleExitDetailMode}>
+    <Button
+        className="bg-red-500/30 hover:bg-[rgba(116,64,165,0.49)] text-[rgba(139,103,172,0.32)] font-bold py-2 px-4 rounded-full text-white"
+        onClick={handleExitDetailMode}>
       <IconX />Exit Detail View
     </Button>
   );

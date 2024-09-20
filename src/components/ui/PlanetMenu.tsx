@@ -49,9 +49,7 @@ const PlanetMenu: React.FC<PlanetMenuProps> = ({ planets }) => {
         {planets.map(planet => (
           <Button
             key={planet.id}
-            variant="flat"
-            color="secondary"
-            size="sm"
+            className="bg-[rgba(137,104,168,0.32)] hover:bg-[rgba(116,64,165,0.49)] text-[rgba(139,103,172,0.32)] font-bold py-2 px-4 rounded-full text-white"
             onClick={() => handleSelect(planet.name)}
             isDisabled={selectedPlanet?.id === planet.id}
           >
