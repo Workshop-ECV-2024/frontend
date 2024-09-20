@@ -1,6 +1,8 @@
 // types.ts
 import { Vector3 } from "three";
 
+declare module '@nextui-org/slider';
+
 export interface PlanetData {
   id: number;
   name: string;
