@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useCameraContext } from "../../../contexts/CameraContext";
 import CameraHomeButton from "./CameraHomeButton";
-import InfoButton from "./InfoButton";
 import ExitViewButon from "./ExitViewButon";
-import HelpButton from "./HelpButton";
 import PlaylistButton from "../PlaylistButton.tsx";
 import CreateJam from '../../CreateJam';
+import {Button} from "@nextui-org/react";
 
 const ControlMenu = () => {
   const { cameraState } = useCameraContext();
@@ -48,12 +47,12 @@ const ControlMenu = () => {
         <CameraHomeButton />
         <PlaylistButton />
 {/* Bouton Create Jam */}
-                    <button
+                    <Button
                         onClick={() => setShowCreateJam(true)} // Affiche CreateJam
                         className="bg-[rgba(137,104,168,0.32)] hover:bg-[rgba(116,64,165,0.49)] text-[rgba(139,103,172,0.32) font-bold py-2 px-4 rounded-full"
                     >
                         Create Jam
-                    </button>        <ExitViewButon />
+                    </Button>        <ExitViewButon />
       </div>
     </motion.div>
 

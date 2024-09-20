@@ -55,7 +55,8 @@ export default function PlaylistButton({ ...props }: PlaylistButtonProps) {
 
   return (
     <>
-      <Button onPress={onOpen}>Playlist</Button>
+      <Button                         className="bg-[rgba(137,104,168,0.32)] hover:bg-[rgba(116,64,165,0.49)] text-[rgba(139,103,172,0.32) font-bold py-2 px-4 rounded-full"
+                                      onPress={onOpen}>Playlist</Button>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
