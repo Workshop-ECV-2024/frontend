@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSelectedPlanet } from "../../contexts/SelectedPlanetContext";
 import { useCameraContext } from "../../contexts/CameraContext";
@@ -34,12 +34,7 @@ type PlanetDataKey = keyof typeof PLANET_DATA_LABEL_MAP;
 const PlanetDetail: React.FC = () => {
   const [selectedPlanet] = useSelectedPlanet();
   const { cameraState } = useCameraContext();
-  const {
-    data: planetData,
-    isLoading,
-    isError,
-    error,
-  } = usePlanetData(selectedPlanet?.name);
+  const { data: planetData } = usePlanetData(selectedPlanet?.name);
 
   const shouldDisplayDetails = cameraState === "DETAIL_VIEW";
 
@@ -101,75 +96,6 @@ const PlanetDetail: React.FC = () => {
               )
             )}
           </ul>
-          {/* {planetData?.atmospheric_composition}
-            <li>
-              <p>
-                <span className="font-semibold">Orbital Period: </span>
-                <span>
-                  {selectedPlanet?.displayStats.orbitalPeriod} Earth days
-                </span>
-              </p>
-            </li>
-            <li>
-              <p>
-                <span className="font-semibold">Mean Distance from Sun: </span>
-                <span>
-                  {selectedPlanet?.displayStats.meanDistanceFromSun} AU
-                </span>
-              </p>
-            </li>
-            <li>
-              <p>
-                <span className="font-semibold">Radius: </span>
-                <span>{selectedPlanet?.displayStats.accurateRadius} km</span>
-              </p>
-            </li>
-            <li>
-              <p>
-                <span className="font-semibold">Mass: </span>
-                <span>{selectedPlanet?.displayStats.mass} Earth masses</span>
-              </p>
-            </li>
-            <li>
-              <p>
-                <span className="font-semibold">Surface Gravity: </span>
-                <span>{selectedPlanet?.displayStats.surfaceGravity} g</span>
-              </p>
-            </li>
-            <li>
-              <p>
-                <span className="font-semibold">Rotation Period: </span>
-                <span>
-                  {selectedPlanet?.displayStats.rotationPeriod} Earth days
-                </span>
-              </p>
-            </li>
-            <li>
-              <p>
-                <span className="font-semibold">Axial Tilt: </span>
-                <span>{selectedPlanet?.displayStats.axialTilt}°</span>
-              </p>
-            </li>
-            <li>
-              <p>
-                <span className="font-semibold">Number of Moons: </span>
-                <span>{selectedPlanet?.displayStats.numberOfMoons}</span>
-              </p>
-            </li>
-            <li>
-              <p>
-                <span className="font-semibold">Atmospheric Composition: </span>
-                <span>
-                  {selectedPlanet?.displayStats.atmosphericComposition}
-                </span>
-              </p>
-            </li>
-            <li>
-              <p>
-                <span className="font-semibold">Surface Temperature: </span>
-                <span>{selectedPlanet?.displayStats.surfaceTemp}</span>
-              </p>
-            </li> */}
         </motion.div>
       )}
     </AnimatePresence>
