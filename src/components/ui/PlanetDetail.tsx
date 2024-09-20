@@ -74,7 +74,7 @@ const PlanetDetail: React.FC = () => {
                                     JSON.parse(
                                         planetData.atmospheric_composition
                                     )
-                                ).map(([compKey, value]) => (
+                                ).map(([compKey, value] : [string, number|string]) => (
                                     <li key={compKey}>
                                       {compKey} - {value}%
                                     </li>

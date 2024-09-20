@@ -31,10 +31,8 @@ const normalizePlanetData = (data: any): PlanetData | null => {
   } as PlanetData;
 };
 
-interface PlaylistButtonProps {}
-
 // PlaylistButton Component
-export default function PlaylistButton({ ...props }: PlaylistButtonProps) {
+export default function PlaylistButton() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [lat, lng] = useGeolocation();
   const { data: weather } = useWeather(lat, lng);

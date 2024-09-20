@@ -8,10 +8,10 @@ export type Weather = {
 }
 
 export type PlanetData = {
-    avg_temperature?: number;
-    mass?: number;
-    distance_from_sun?: number;
-    year_length?: number;
+    avg_temperature?: number|string;
+    mass?: number|string;
+    distance_from_sun?: number|string;
+    year_length?: number|string;
 }
 export class MusicComposer {
     public synth: any;
@@ -216,6 +216,11 @@ export class MusicComposer {
         let earthDistanceFromSun = this.earthData.distance_from_sun;
         // let's say earth distance is equal to 25% of reverb
 
+        if (!Number.isInteger(earthDistanceFromSun)) {
+            earthDistanceFromSun = parseFloat(earthDistanceFromSun as any)
+        }
+
+        // @ts-ignore
         let reverbValue = Math.min(1, 0.25 * (distanceFromSun / earthDistanceFromSun));
         // set reverb
 
@@ -338,6 +343,7 @@ export class MusicComposer {
                 const earthYearLength = this.earthData.year_length;
                 const planetYearLength = this.planetData.year_length;
 
+                // @ts-ignore
                 tempo = Math.max(Math.min(160, (planetYearLength/earthYearLength) * 120), 60);
         }
 
