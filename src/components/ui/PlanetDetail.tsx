@@ -10,6 +10,27 @@ const variants = {
   exit: { opacity: 0, y: -20 },
 };
 
+const PLANET_DATA_LABEL_MAP = {
+  // name: { label: "Nom" },
+  atmospheric_composition: { label: "Atmospheric composition", unit: "" },
+  avg_temperature: { label: "Average temperature", unit: "°C" },
+  day_length: { label: "Day length", unit: "Earth days" },
+  year_length: { label: "Year length", unit: "Earth days" },
+  distance_from_sun: { label: "Distance from sun", unit: "km" },
+  mass: { label: "Mass relative to Earth", unit: "x" },
+  radius: { label: "Radius", unit: "km" },
+} as const satisfies {
+  [TKey in Exclude<
+    keyof NonNullable<Required<ReturnType<typeof usePlanetData>["data"]>>,
+    "created_at" | "updated_at" | "id" | "name"
+  >]: {
+    label: string;
+    unit?: string;
+  };
+};
+
+type PlanetDataKey = keyof typeof PLANET_DATA_LABEL_MAP;
+
 const PlanetDetail: React.FC = () => {
   const [selectedPlanet] = useSelectedPlanet();
   const { cameraState } = useCameraContext();
@@ -19,15 +40,6 @@ const PlanetDetail: React.FC = () => {
     isError,
     error,
   } = usePlanetData(selectedPlanet?.name);
-
-  const [date, setDate] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // date, city, country
-  };
 
   const shouldDisplayDetails = cameraState === "DETAIL_VIEW";
 
@@ -43,51 +55,6 @@ const PlanetDetail: React.FC = () => {
           variants={variants}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          {/* Formulaire de recherche */}
-          <form onSubmit={handleSubmit} className="mb-4">
-            <div className="mb-2">
-              <label htmlFor="date" className="block text-sm font-semibold">
-                Select Date:
-              </label>
-              <input
-                type="date"
-                id="date"
-                value={date}
-                onChange={e => setDate(e.target.value)}
-                className="p-2 w-full border border-gray-300 rounded"
-              />
-            </div>
-            {selectedPlanet?.name === "Earth" && (
-              <div className="mb-4">
-                <label className="block text-sm font-semibold">Location:</label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    id="city"
-                    value={city}
-                    onChange={e => setCity(e.target.value)}
-                    placeholder="City"
-                    className="p-2 flex-1 border border-gray-300 rounded"
-                  />
-                  <input
-                    type="text"
-                    id="country"
-                    value={country}
-                    onChange={e => setCountry(e.target.value)}
-                    placeholder="Country"
-                    className="p-2 flex-1 border border-gray-300 rounded"
-                  />
-                </div>
-              </div>
-            )}
-            <button
-              type="submit"
-              className="bg-blue-500 text-white p-2 rounded"
-            >
-              Submit
-            </button>
-          </form>
-
           {/* Détails de la planète */}
           <h1 className="tracking-tight font-semibold text-7xl lg:text-8xl xl:text-8xl opacity-90">
             {selectedPlanet ? selectedPlanet.name : ""}
@@ -96,8 +63,45 @@ const PlanetDetail: React.FC = () => {
             {selectedPlanet?.displayStats.classification}
           </h4>
 
-          <pre>{JSON.stringify(planetData, null, 2)}</pre>
-          <ul className="text-sm w-64 ml-2 hidden lg:block text-gray-200">
+          {/* Data list */}
+          <ul className="text-sm max-w-96 p-4 bg-zinc-700/50 rounded ml-2 hidden lg:flex flex-col gap-2 text-gray-200">
+            {Object.entries(PLANET_DATA_LABEL_MAP).map(
+              ([key, { label, unit }]) => (
+                // Each spec
+                <li key={key} className="">
+                  <p className="flex gap-2">
+                    <span className="font-semibold">{label}</span>
+                    <span className="">
+                      {/* String value */}
+                      {(key as PlanetDataKey) !== "atmospheric_composition" &&
+                        planetData?.[key as PlanetDataKey]}{" "}
+                      {/* Unit */}
+                      {unit}
+                    </span>
+                  </p>
+
+                  {/* Atmospheric composition values */}
+                  {(key as PlanetDataKey) === "atmospheric_composition" && (
+                    <ul className="list-disc list-inside">
+                      {Object.entries(
+                        JSON.parse(
+                          planetData?.[
+                            // juste pour flex un peu, je sais que c'est horrible mais trkl
+                            key as "atmospheric_composition" satisfies PlanetDataKey
+                          ] ?? ""
+                        )
+                      ).map(([key, value]) => (
+                        <li key={key}>
+                          {key} - {value}%
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              )
+            )}
+          </ul>
+          {/* {planetData?.atmospheric_composition}
             <li>
               <p>
                 <span className="font-semibold">Orbital Period: </span>
@@ -165,8 +169,7 @@ const PlanetDetail: React.FC = () => {
                 <span className="font-semibold">Surface Temperature: </span>
                 <span>{selectedPlanet?.displayStats.surfaceTemp}</span>
               </p>
-            </li>
-          </ul>
+            </li> */}
         </motion.div>
       )}
     </AnimatePresence>
